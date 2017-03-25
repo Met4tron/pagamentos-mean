@@ -1,4 +1,4 @@
-main-footer {
+.main-footer {
   position: fixed;
   bottom: 0px;
   width: 100%;
@@ -6,4 +6,11 @@ main-footer {
 
 html {
   background-color: #ecf0f5;
+}
+#toast-container {
+  top: 70px;
+}
+
+.table-action {
+  width: 140px;
 }

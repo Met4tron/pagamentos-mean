@@ -5,6 +5,7 @@ angular.module('primeiraApp').component('valueBox', {
     value: '@',
     text: '@',
     iconClass: '@'
+
   },
   controller: [
     'gridSystem',
@@ -15,8 +16,8 @@ angular.module('primeiraApp').component('valueBox', {
   template: `
   <div class="{{ $ctrl.gridClasses }}">
     <div class="small-box {{ $ctrl.colorClass }}">
-      <div class="inner">
-        <h3>{{ $ctrl.value }}</h3>
+      <div class="inner" >
+        <h3 >{{ $ctrl.value }}</h3>
         <p>{{ $ctrl.text }}</p>
       </div>
       <div class="icon">
@@ -24,6 +25,7 @@ angular.module('primeiraApp').component('valueBox', {
       </div>
     </div>
   </div>
+
 
   `
 })
