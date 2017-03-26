@@ -3,6 +3,7 @@
     '$http',
     'msgs',
     'tabs',
+    
     BillingCycleController
   ])
 
@@ -15,9 +16,13 @@
           .then(function(response) {
             vm.billingCycle = {credits: [{}], debts: [{}]}
             vm.billingCycles = response.data
+            vm.calculateValues()
             tabs.show(vm, {tabList: true, tabCreate: true})
+
           })
           .catch(function(response) {
+
+
             msgs.addError(response.data.errors)
           })
     }
@@ -37,11 +42,13 @@
 
     vm.showTabUpdate = function(billingCycle) {
         vm.billingCycle = billingCycle
+        vm.calculateValues()
         tabs.show(vm, { tabUpdate: true  })
     }
 
     vm.showTabDelete = function(billingCycle) {
       vm.billingCycle = billingCycle
+      vm.calculateValues()
       tabs.show(vm, { tabDelete: true  })
     }
 
@@ -71,6 +78,53 @@
         .catch(function(response) {
           msgs.addError(response.data.errors)
         })
+    }
+
+    vm.addCredit = function(index) {
+      vm.billingCycle.credits.splice(index + 1, 0, {})
+    }
+
+    vm.cloneCredit = function (index, {name, value}) {
+      vm.billingCycle.credits.splice(index + 1, 0, {name, value})
+      vm.calculateValues()
+    }
+
+    vm.deleteCredit = function(index) {
+      if(billingCycle.credits.length > 1) {
+        vm.billingCycle.credits.splice(index, 1)
+      vm.calculateValues()
+      }
+    }
+
+    vm.addDebit = function(index) {
+      vm.billingCycle.debts.splice(index + 1, 0, {})
+    }
+
+    vm.cloneDebt = function(index, {name, value, status}) {
+      vm.billingCycle.debts.splice(index + 1, 0, {name, value, status})
+      vm.calculateValues()
+    }
+
+    vm.deleteDebt = function(index) {
+      if(billingCycle.debts.length > 1) {
+        vm.billingCycle.debts.splice(index, 1)
+       vm.calculateValues()
+      }
+    }
+
+    vm.calculateValues = function() {
+      vm.credit = 0
+      vm.debt = 0
+
+      if(vm.billingCycle) {
+        vm.billingCycle.credits.forEach(function({values}) {
+          vm.credit += !value || isNaN(value) ? 0 : parseFloat(value)
+        })
+        vm.billingCycle.debts.forEach(function({value}) {
+          vm.debt += !value || isNaN(value) ? 0 : parseFloat(value)
+        })
+        vm.total = vm.credit - vm.debt
+      }
     }
 
     vm.refresh()
